@@ -1,0 +1,30 @@
+# Ignore large files
+Hidemium_4-4.0.27-setup.exe
+Hidemium_4-4.0.27-setup.exe.zip
+
+# Ignore unnecessary files
+el.offsetParent
+{
+Shoppe Monitoring - BPMN Process Guide.docx
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Chrome debug profile
+chrome_debug_profile/
+
+# Screenshots
+screenshots/
+
+# Virtual Environment
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log 
