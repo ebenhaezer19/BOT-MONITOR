@@ -24,7 +24,7 @@ import json
 from selenium.webdriver.chrome.service import Service
 import re
 
-# Setup logging
+# Set up logging configuration
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -35,11 +35,11 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-# Ganti dengan URL Webhook Discord Anda
+# Replace with your Discord Webhook URL
 DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1356075531610620074/Pq6XsV_yp_gZ3N5pDhM3GJoLC_QWV1L7FI8SQY_ByfALM9AIB3eGV3b-TzS3qOkH7BR1"
 
 def send_discord_notification(message, embed=None):
-    """Mengirim notifikasi ke Discord via Webhook."""
+    """Send a notification to Discord via Webhook."""
     try:
         data = {"content": message}
         if embed:
@@ -53,7 +53,7 @@ def send_discord_notification(message, embed=None):
         logger.error(f"Error sending Discord notification: {str(e)}")
 
 def is_port_in_use(port):
-    """Check if port is in use."""
+    """Check if a port is currently in use."""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         try:
             s.bind(('127.0.0.1', port))
@@ -62,7 +62,7 @@ def is_port_in_use(port):
             return True
 
 def find_chrome_path():
-    """Find Chrome path based on operating system."""
+    """Locate the Chrome executable path based on the operating system."""
     if platform.system() == "Windows":
         import winreg
         try:
@@ -116,9 +116,11 @@ USER_AGENTS = [
 ]
 
 def get_random_delay(min_seconds=15, max_seconds=45):
+    """Generate a random delay between the specified min and max seconds."""
     return random.uniform(min_seconds, max_seconds)
 
 def start_chrome_with_debugging(port=9222, user_data_dir=None, url=None):
+    """Start Chrome with debugging options."""
     if is_port_in_use(port):
         logger.info(f"Chrome is already running on port {port}")
         return True
@@ -170,6 +172,7 @@ def start_chrome_with_debugging(port=9222, user_data_dir=None, url=None):
         return False
 
 def connect_to_chrome(port=9222):
+    """Connect to an existing Chrome instance using the specified port."""
     try:
         logger.info(f"Connecting to Chrome on port {port}...")
         
@@ -177,7 +180,7 @@ def connect_to_chrome(port=9222):
         options.add_experimental_option("debuggerAddress", f"127.0.0.1:{port}")
         
         options.add_argument("--disable-blink-features=AutomationControlled")
-        options.add_argument(f'user-agent={random.choice(USER_AGENTS)}')
+        options.add_argument(f"user-agent={random.choice(USER_AGENTS)}")
         
         service = Service()
         driver = webdriver.Chrome(service=service, options=options)
@@ -192,7 +195,7 @@ def connect_to_chrome(port=9222):
         return None
 
 def configure_tesseract():
-    """Configure Tesseract path based on operating system."""
+    """Configure the Tesseract OCR executable path based on the operating system."""
     system = platform.system()
     
     if system == "Windows":
@@ -246,7 +249,7 @@ def configure_tesseract():
         return False
 
 def cleanup_old_screenshots():
-    """Cleanup old screenshots and OCR text files."""
+    """Remove old screenshots and OCR text files from the screenshots directory."""
     try:
         screenshots_dir = os.path.abspath("./screenshots")
         if os.path.exists(screenshots_dir):
@@ -262,7 +265,7 @@ def cleanup_old_screenshots():
         logger.error(f"Error cleaning up screenshots: {str(e)}")
 
 def check_product_availability(driver):
-    """Check product availability using OCR and send Discord notification."""
+    """Check product availability using OCR and send a Discord notification."""
     try:
         cleanup_old_screenshots()
         
@@ -393,7 +396,7 @@ def check_product_availability(driver):
         return None
 
 def get_product_url():
-    """Get product URL from user input or use default."""
+    """Prompt the user to input a product URL or use the default one."""
     print("\n" + "="*80)
     print("SHOPEE STEALTH MONITOR - URL SETUP".center(80))
     print("="*80)
@@ -421,6 +424,7 @@ def get_product_url():
             print(f"\nError: {str(e)}")
 
 def stealth_monitor():
+    """Main function to monitor product availability on Shopee."""
     product_url = get_product_url()
     
     try:
