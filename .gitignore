@@ -57,4 +57,23 @@ chrome_debug_profile/*
 !chrome_debug_profile/.gitkeep
 
 # Screenshots
-screenshots/ 
+screenshots/
+
+# Large files
+*.exe
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache files
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/ 
